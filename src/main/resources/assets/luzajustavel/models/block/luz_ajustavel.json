@@ -1,18 +1,18 @@
 {
   "textures": {
-    "all": "minecraft:block/white_concrete",
-    "particle": "minecraft:block/white_concrete"
+    "all": "luzajustavel:block/transparente",
+    "particle": "luzajustavel:block/transparente"
   },
   "elements": [
     {
       "from": [
         5,
-        0,
+        0.5,
         5
       ],
       "to": [
         11,
-        6,
+        6.5,
         11
       ],
       "faces": {
@@ -23,8 +23,7 @@
             16,
             16
           ],
-          "texture": "#all",
-          "tintindex": 0
+          "texture": "#all"
         },
         "up": {
           "uv": [
@@ -33,8 +32,7 @@
             16,
             16
           ],
-          "texture": "#all",
-          "tintindex": 0
+          "texture": "#all"
         },
         "north": {
           "uv": [
@@ -43,8 +41,7 @@
             16,
             16
           ],
-          "texture": "#all",
-          "tintindex": 0
+          "texture": "#all"
         },
         "south": {
           "uv": [
@@ -53,8 +50,7 @@
             16,
             16
           ],
-          "texture": "#all",
-          "tintindex": 0
+          "texture": "#all"
         },
         "west": {
           "uv": [
@@ -63,8 +59,7 @@
             16,
             16
           ],
-          "texture": "#all",
-          "tintindex": 0
+          "texture": "#all"
         },
         "east": {
           "uv": [
@@ -73,8 +68,7 @@
             16,
             16
           ],
-          "texture": "#all",
-          "tintindex": 0
+          "texture": "#all"
         }
       }
     }
