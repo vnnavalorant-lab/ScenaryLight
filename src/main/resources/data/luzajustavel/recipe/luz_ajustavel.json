@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:torch",
+    "minecraft:glowstone_dust"
+  ],
+  "result": {
+    "id": "luzajustavel:luz_ajustavel",
+    "count": 1
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "luzajustavel",
+  "version": "${version}",
+  "name": "Luz Ajustavel",
+  "description": "Uma luz parecida com tocha, com alcance e cor ajustaveis.",
+  "authors": ["Voce"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.exemplo.luz.LuzAjustavel"],
+    "client": ["com.exemplo.luz.LuzAjustavelClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
