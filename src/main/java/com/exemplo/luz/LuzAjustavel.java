@@ -11,6 +11,7 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -27,7 +28,6 @@ public class LuzAjustavel implements ModInitializer {
 
     public static Block LUZ_BLOCK;
     public static Item LUZ_ITEM;
-    public static Item VARINHA;
 
     @Override
     public void onInitialize() {
@@ -50,22 +50,15 @@ public class LuzAjustavel implements ModInitializer {
                         .registryKey(itemKey)
                         .useBlockPrefixedTranslationKey()));
 
-        // ---- Varinha de Luz (editor visual) ----
-        Identifier wandId = Identifier.of(MOD_ID, "varinha_luz");
-        RegistryKey<Item> wandKey = RegistryKey.of(RegistryKeys.ITEM, wandId);
-        VARINHA = Registry.register(Registries.ITEM, wandKey,
-                new Item(new Item.Settings().registryKey(wandKey).maxCount(1)));
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
-            entries.add(LUZ_ITEM);
-            entries.add(VARINHA);
-        });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL)
+                .register(entries -> entries.add(LUZ_ITEM));
 
         // ---- Rede: o cliente pede um novo alcance, o servidor valida e aplica ----
         PayloadTypeRegistry.playC2S().register(AlcancePayload.ID, AlcancePayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(AlcancePayload.ID, (payload, context) -> {
             ServerPlayerEntity player = context.player();
-            if (!player.getMainHandStack().isOf(VARINHA)) return;
+            ItemStack mao = player.getMainHandStack();
+            if (!(mao.isEmpty() || mao.isOf(LUZ_ITEM))) return;
 
             BlockPos pos = payload.pos();
             if (player.squaredDistanceTo(Vec3d.ofCenter(pos)) > 128.0 * 128.0) return;

@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +16,7 @@ import net.minecraft.util.math.Vec3d;
 
 /**
  * Editor visual do alcance (estilo "gizmo" de volume):
- *  - Segurando a Varinha de Luz e mirando num bloco de luz, aparece uma esfera de
+ *  - Com a mao vazia (ou segurando o bloco de luz) e mirando num bloco de luz, aparece uma esfera de
  *    particulas (3 aneis) com o raio atual.
  *  - Segure o botao direito mirando no bloco e AFASTE a mira dele: o raio cresce.
  *    Aproxime: diminui. Uma haste com ponta brilhante mostra a "alca" sendo puxada.
@@ -40,14 +41,15 @@ public class LuzAjustavelClient implements ClientModInitializer {
             return;
         }
         ItemStack mao = c.player.getMainHandStack();
-        boolean comVarinha = mao.isOf(LuzAjustavel.VARINHA);
         boolean comBloco = mao.isOf(LuzAjustavel.LUZ_ITEM);
-        if (!comVarinha) selecionado = null;
-        if (!comVarinha && !comBloco) return;
+        boolean editor = mao.isEmpty() || comBloco; // mao vazia ou segurando o bloco de luz
+        if (!editor) {
+            selecionado = null;
+            return;
+        }
 
         tick++;
-        if (tick % 10 == 0) marcarBlocosProximos(c);
-        if (!comVarinha) return;
+        if (comBloco && tick % 10 == 0) marcarBlocosProximos(c);
 
         HitResult mira = c.crosshairTarget;
         BlockPos naMira = null;
@@ -89,6 +91,7 @@ public class LuzAjustavelClient implements ClientModInitializer {
             if (novo != ultimoEnviado) {
                 ultimoEnviado = novo;
                 ClientPlayNetworking.send(new AlcancePayload(alvo, novo));
+                c.player.sendMessage(Text.literal("Alcance da luz: " + novo), true);
             }
             ponta = pontaDaHaste(c, centro, novo);
         }

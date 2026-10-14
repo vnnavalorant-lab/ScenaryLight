@@ -68,13 +68,10 @@ public class LuzBlock extends Block {
         return FORMA;
     }
 
-    /** Corante na mao: muda a cor. Varinha: o ajuste e feito pelo arrasto (cliente). */
+    /** Corante na mao: muda a cor. */
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos,
                                          PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (stack.isOf(LuzAjustavel.VARINHA)) {
-            return ActionResult.SUCCESS;
-        }
         if (stack.getItem() instanceof DyeItem dye) {
             if (!world.isClient()) {
                 world.setBlockState(pos, state.with(COR, dye.getColor()));
@@ -86,17 +83,9 @@ public class LuzBlock extends Block {
         return ActionResult.PASS_TO_DEFAULT_BLOCK_ACTION;
     }
 
-    /** Mao vazia: +1 de alcance. Shift: -1. */
+    /** O alcance e ajustado pelo arrasto (cliente). Clique nao faz nada, para nao colocar blocos por engano. */
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
-            int atual = state.get(ALCANCE);
-            int novo = player.isSneaking()
-                    ? (atual <= 1 ? MAX_ALCANCE : atual - 1)
-                    : (atual >= MAX_ALCANCE ? 1 : atual + 1);
-            world.setBlockState(pos, state.with(ALCANCE, novo));
-            player.sendMessage(Text.literal("Alcance da luz: " + novo), true);
-        }
         return ActionResult.SUCCESS;
     }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Regenera, a partir de UMA tabela de cores:
-  LuzColorida/shaders/block.properties   (IDs 31000 + cor*64 + alcance(1..48))
+  ScenaryColor-Shader/shaders/block.properties   (IDs 31000 + cor*64 + alcance(1..48))
   paleta dentro de gbuffers_terrain.vsh  (entre BEGIN_PALETTE / END_PALETTE)
 Mantenha a tabela igual a LuzBlock.rgb() no Java.
 """
@@ -14,7 +14,7 @@ CORES = {
     "light_gray": 0xCCCCD9, "cyan": 0x1AE6E6, "purple": 0x9940FF, "blue": 0x334DFF,
     "brown": 0xCC8040, "green": 0x33E64D, "red": 0xFF261A, "black": 0x4D1A80,
 }
-root = pathlib.Path(__file__).parent / "LuzColorida" / "shaders"
+root = pathlib.Path(__file__).parent / "ScenaryColor-Shader" / "shaders"
 
 lines = ["# Gerado por gerar_shader.py", "# Luz Ajustavel: id = 31000 + corIndex*64 + alcance (1..48)"]
 for ci, nome in enumerate(CORES):
